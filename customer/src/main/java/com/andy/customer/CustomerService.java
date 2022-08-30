@@ -1,15 +1,19 @@
 package com.andy.customer;
 
+import com.andy.clients.fraud.FraudCheckResponse;
+import com.andy.clients.fraud.FraudClient;
+import com.andy.clients.notification.NotificationClient;
+import com.andy.clients.notification.NotificationRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @AllArgsConstructor
 @Service
 public class CustomerService {
-
-    private final RestTemplate restTemplate;
     private final CustomerRepository customerRepository;
+    private final FraudClient fraudClient;
+
+    private final NotificationClient notificationClient;
 
     public void registerCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
         Customer customer = Customer.builder()
@@ -20,18 +24,23 @@ public class CustomerService {
         // todo: check if email valid
         // todo: check if email not taken
 
-
         customerRepository.saveAndFlush(customer);
+
         // todo: check if fraudster
-        FraudCheckResponse fraudCheckResponse = restTemplate.getForObject(
-                "http://FRAUD/api/v1/fraud-check/{customerId}",
-                FraudCheckResponse.class,
-                customer.getId()
-        );
+        FraudCheckResponse fraudCheckResponse = fraudClient.isFraudster(customer.getId());
+
         if (fraudCheckResponse.isFraudster()){
             throw new IllegalStateException("Fraudster!");
         }
 
-        // todo: send notification
+        // todo: send notification - make it async. i.e add to queue
+        notificationClient.sendNotification(
+                new NotificationRequest(
+                        customer.getId(),
+                        customer.getEmail(),
+                        String.format("Hi %s, welcome to Andy's microservices!",
+                                customer.getFirstName())
+                )
+        );
     }
 }
