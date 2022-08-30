@@ -8,16 +8,10 @@
     <artifactId>microservices</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-
     <modules>
         <module>customer</module>
-        <module>fraud</module>
-        <module>eureka-server</module>
-        <module>clients</module>
-        <module>notification</module>
-        <module>apigw</module>
-        <module>amqp</module>
     </modules>
+
 
     <name>microservices</name>
 
@@ -27,8 +21,8 @@
         <maven.compiler.target>17</maven.compiler.target>
         <spring.boot.maven.plugin.version>2.5.7</spring.boot.maven.plugin.version>
         <spring.boot.dependencies.version>2.5.7</spring.boot.dependencies.version>
-        <spring.cloud-version>2020.0.3</spring.cloud-version>
-        <image>amigoscode/${project.artifactId}:${project.version}</image>
+<!--        <spring.cloud-version>2020.0.3</spring.cloud-version>-->
+<!--        <image>amigoscode/${project.artifactId}:${project.version}</image>-->
     </properties>
 
     <dependencyManagement>
@@ -40,13 +34,13 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud-version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.cloud</groupId>-->
+<!--                <artifactId>spring-cloud-dependencies</artifactId>-->
+<!--                <version>${spring.cloud-version}</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
         </dependencies>
     </dependencyManagement>
 
@@ -59,10 +53,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-openfeign</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
@@ -80,39 +74,39 @@
                         </execution>
                     </executions>
                 </plugin>
-                <plugin>
-                    <groupId>com.google.cloud.tools</groupId>
-                    <artifactId>jib-maven-plugin</artifactId>
-                    <version>3.1.4</version>
-                    <configuration>
-                        <from>
-                            <image>eclipse-temurin:17@sha256:2b47a8ea946ce1e5365a1562414ed576e378b7b670cadff3fb98ebecf2890cdc</image>
-                            <platforms>
-                                <platform>
-                                    <architecture>arm64</architecture>
-                                    <os>linux</os>
-                                </platform>
-                                <platform>
-                                    <architecture>amd64</architecture>
-                                    <os>linux</os>
-                                </platform>
-                            </platforms>
-                        </from>
-                        <to>
-                            <tags>
-                                <tag>latest</tag>
-                            </tags>
-                        </to>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>build</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
+<!--                <plugin>-->
+<!--                    <groupId>com.google.cloud.tools</groupId>-->
+<!--                    <artifactId>jib-maven-plugin</artifactId>-->
+<!--                    <version>3.1.4</version>-->
+<!--                    <configuration>-->
+<!--                        <from>-->
+<!--                            <image>eclipse-temurin:17@sha256:2b47a8ea946ce1e5365a1562414ed576e378b7b670cadff3fb98ebecf2890cdc</image>-->
+<!--                            <platforms>-->
+<!--                                <platform>-->
+<!--                                    <architecture>arm64</architecture>-->
+<!--                                    <os>linux</os>-->
+<!--                                </platform>-->
+<!--                                <platform>-->
+<!--                                    <architecture>amd64</architecture>-->
+<!--                                    <os>linux</os>-->
+<!--                                </platform>-->
+<!--                            </platforms>-->
+<!--                        </from>-->
+<!--                        <to>-->
+<!--                            <tags>-->
+<!--                                <tag>latest</tag>-->
+<!--                            </tags>-->
+<!--                        </to>-->
+<!--                    </configuration>-->
+<!--                    <executions>-->
+<!--                        <execution>-->
+<!--                            <phase>package</phase>-->
+<!--                            <goals>-->
+<!--                                <goal>build</goal>-->
+<!--                            </goals>-->
+<!--                        </execution>-->
+<!--                    </executions>-->
+<!--                </plugin>-->
             </plugins>
         </pluginManagement>
         <plugins>
